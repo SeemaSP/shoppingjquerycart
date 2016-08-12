@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--orderform.xml
+<!DOCTYPE orderform SYSTEM "order.dtd"[<!ENTITY TV "television">  
+<!ENTITY AC "air conditioner"> ]>-->
+
+<orderform 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="orderform.xs">
+ <customer>
+   <name>Jenny</name>
+  <address>Tokyo</address>
+  <tel>
+   <portable>55555555555</portable>
+  </tel>
+ </customer>
+ <customer>
+   <name>Jenny</name>
+  <address>Tokyo</address>
+  <tel>
+   <home>555555555554</home>
+  </tel>
+ </customer>
+ <customer>
+   <name>Jenny</name>
+  <address>Tokyo</address>
+  <tel>
+   <home>55555555555</home>
+  </tel>
+ </customer>
+ <product>
+  <product_name>television</product_name>
+  <num>1</num>
+ </product>
+ <product>
+  <product_name>Air Conditioner</product_name>
+  <num>2</num>
+ </product>
+</orderform>
