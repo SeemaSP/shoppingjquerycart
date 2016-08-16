@@ -1,0 +1,12 @@
+<!ELEMENT orderform (customer,product*)>   
+<!ELEMENT customer (name,address,tel)>      
+<!ELEMENT name (#PCDATA)>                 
+<!ELEMENT address (#PCDATA)>              
+<!ELEMENT tel (portable | home)>           
+<!ELEMENT portable (#PCDATA)>         
+<!ELEMENT home (#PCDATA)>             
+<!ELEMENT product (product_name,num)>          
+<!ELEMENT product_name (#PCDATA)>  
+<!ELEMENT num (#PCDATA)> 
+
+         

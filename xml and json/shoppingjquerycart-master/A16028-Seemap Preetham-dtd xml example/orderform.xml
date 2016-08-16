@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--orderform.xml
+<!DOCTYPE orderform SYSTEM "order.dtd"[<!ENTITY TV "television">  
+<!ENTITY AC "air conditioner"> ]>-->
+<!-- xmlns="http://www.w3schools.com" xmlns:tns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ paste it after orderform wher you see xmlns
+ -->
+<orderform 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="test.xsd">
+		<customer>
+			<name>Jenny</name>
+			<address>Tokyo</address>
+			<tel>
+				<portable>5555555555</portable>
+			</tel>
+		</customer>
+		<customer>
+			<name>Jenny</name>
+			<address>Tokyo</address>
+			<tel>
+				<home>5555555555</home>
+			</tel>
+		</customer>
+		<customer>
+			<name>Jenny</name>
+			<address>Tokyo</address>
+			<tel>
+				<home>5555555555</home>
+			</tel>
+		</customer>
+		<product>
+			<product_name>television</product_name>
+			<num>1</num>
+		</product>
+		<product>
+			<product_name>Air Conditioner</product_name>
+			<num>2</num>
+		</product>
+</orderform>

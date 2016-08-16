@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+ <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+ <xs:element name="orderform" type="orderformtype" />
+ <xs:complexType name="orderformtype">
+ <xs:sequence>
+   <xs:element ref="customer" minOccurs="0" maxOccurs="unbounded"/>
+   <xs:element ref="product" minOccurs="0" maxOccurs="unbounded" />
+  </xs:sequence>
+ </xs:complexType>
+
+ <xs:element name="customer" type="customertype" />
+ <xs:complexType name="customertype">
+  <xs:sequence>
+   <xs:element name="name" type="xs:string" />
+ <xs:element name="address" type="xs:string" />
+ <xs:element name="tel" type="teltype" /> 
+ <xs:complexType name="teltype">
+	<xs:choice>
+		<xs:element name="portable" type="portabletype"/>
+		<xs:element name="home" type="portabletype"/>		
+	</xs:choice>	
+ </xs:complexType>    
+  </xs:sequence> 
+ </xs:complexType> 
+ <xs:simpleType name="portabletype">
+	<xs:restriction base="xs:string">
+		<xs:length value="10"/>
+	</xs:restriction>
+ </xs:simpleType> 
+ <xs:element name="product" type="producttype" />
+ <xs:complexType name="producttype">
+  <xs:sequence >
+   <xs:element name="product_name" type="xs:string" />
+ <xs:element name="num" type="xs:string" />
+  </xs:sequence> 
+ </xs:complexType> 
+ </xs:schema>
