@@ -1,0 +1,148 @@
+public class MergeTwoSortedArrays {
+	public void merge(int A[], int m, int B[], int n) {
+		while (n > 0) {
+			// the original A has all merged into the new A, and merge the left
+			// B
+			if (m <= 0 || A[m - 1] < B[n - 1])
+				A[n + m - 1] = B[--n];
+			else
+				A[n + m - 1] = A[--m];
+		}
+	}
+}
+--------------------------------------------
+public class RemoveDuplicatesFromSortedArray {
+	public int removeDuplicates(int[] A) {
+		int len = A.length;
+		int i = 0;
+		if (len <= 1)
+			return len;
+		for (int j = 1; j < len; j++) {
+			if (A[j] != A[i])
+				A[++i] = A[j];
+		}
+		return i + 1;
+	}
+}
+--------------------------------------------------------
+public class QuickSort {
+	 
+    static int A[] = { 2, 8, 7, 1, 3, 5, 6, 4 };
+
+	public static void quickSort(int A[], int low, int high) {
+		int pivot;
+		// Termination condition!
+		if (high > low) {
+			pivot = Partition(A, low, high);
+			quickSort(A, low, pivot - 1);
+			quickSort(A, pivot + 1, high);
+		}
+	}
+ 
+	private static int Partition(int[] A, int low, int high) {
+		int left, right, pivot_item = A[low];
+		left = low;
+		right = high;
+		while (left < right) {
+			// Move left while item < pivot
+			while (A[left] <= pivot_item)
+				left++;
+			// Move right while item > pivot
+			while (A[right] > pivot_item)
+				right--;
+			if (left < right)
+				swap(A, left, right);
+		}
+		// right is final position for the pivot
+		A[low] = A[right];
+		A[right] = pivot_item;
+		return right;
+	}
+ 
+	private static void swap(int[] A, int left, int right) {
+		int temp = 0;
+		temp = A[left];
+		A[left] = A[right];
+		A[right] = temp;
+	}
+ 
+	public static void main(String[] args) {
+		quickSort(A, 0, 7);
+		for (int i = 0; i < A.length; i++) {
+			System.out.print(A[i] + ", ");
+		}
+	}
+ 
+}
+---------------------------------------------------------------------------
+public class BinarySearchRotatedIterative {
+    public boolean search(int[] A, int data) {
+        int left = 0;
+        int right = A.length - 1;
+        while(left <= right){
+            // Avoid overflow
+            int mid = left + (right - left) / 2;
+            if(A[mid] == data)
+                return true;
+            
+            // the bottom half is sorted;
+            if(A[left] < A[mid]){
+                if(A[left] <= data && data < A[mid])
+                    right = mid - 1;
+                else
+                    left = mid + 1;
+            }
+            
+            // the upper half is sorted;
+            else if(A[left] > A[mid]){
+                if(A[mid] < data && data <= A[right])
+                    left = mid + 1;
+                else
+                    right = mid - 1;
+            }else{
+                // skip duplicate one, A[start] == A[mid];
+                left++;
+            }
+        }
+        return false;
+    }
+}
+---------------------------------------------------------------------
+public class BinarySearchRotatedRecursive {
+	public int search(int[] A, int left, int right, int data) {
+		if(left > right) return -1;
+		int mid = left + (right - left) / 2;
+		if(data == A[mid]) return mid;
+		else if(A[left] <= A[mid]) { 	// start half is in sorted order.
+			if(data >= A[left] && data < A[mid])
+				return search(A, left, mid - 1, data);
+			else 	return search(A, mid + 1, right, data);
+		} 
+		else { 	// A[mid] <= A[right], right half is in sorted order.
+			if(data > A[mid] && data <= A[right])
+				return search(A, mid + 1, right, data);
+			else	return search(A, left, mid - 1, data);
+		}
+	}
+}
+--------------------------------------------------------------------------
+public class SearchInSorted2DMatrix {
+    public boolean searchMatrix(int[][] A, int target) {
+        int length = A.length;
+        int width = A[0].length;
+        int start = 0; 
+        int end = width * length - 1;
+        while(start <= end){
+            int mid = (start + end) / 2;
+            int x = mid / width;
+            int y = mid % width;
+            if(A[x][y] == target)
+                return true;
+            else if(A[x][y] > target)
+                end = mid - 1;
+            else 
+                start = mid + 1;
+        }
+        return false;
+    }
+}
