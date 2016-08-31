@@ -1,0 +1,315 @@
+create schema seemap_A16028
+create table [seemap_A16028].[CustomerInfo]
+(
+	CustId int identity(1,1) primary key,
+	CustName varchar(150),		
+	DateOfBirth	date,
+	Gender char(10),
+	CustAddress	varchar(2000)	
+)
+select * from [seemap_A16028].[CustomerInfo]
+
+drop table [seemap_A16028].[CustomerInfo]
+drop table [seemap_A16028].[BranchInfo]
+drop table [seemap_A16028].[CustomerBranchMap]
+drop table [seemap_A16028].[CustomerStatus]
+drop table [seemap_A16028].[TransactionInfo]
+drop table [seemap_A16028].[Holding]
+
+alter table [seemap_A16028].[CustomerBranchMap]
+drop constraint tblCustomerBranchMap_CustId_FK
+alter table [seemap_A16028].[CustomerBranchMap] 
+drop constraint tblCustomerBranchMap_BranchId_FK
+alter table [seemap_A16028].[CustomerStatus] 
+drop constraint tblCustomerStatus_CustId_FK
+alter table [seemap_A16028].[TransactionInfo] 
+drop constraint tblTransactionInfo_CustId_FK
+alter table [seemap_A16028].[Holding] 
+drop constraint tblHolding_CustId_FK
+
+create table [seemap_A16028].[BranchInfo]
+(
+	BranchId int identity(1,1) primary key,
+	BranchName varchar(150),		
+	BranchAddress varchar(2000)	
+)
+select * from [seemap_A16028].[BranchInfo]
+
+create table [seemap_A16028].[CustomerBranchMap]
+(
+	CustId int ,
+	BranchId int ,
+	BranchName varchar(150),		
+	BranchAddress varchar(2000)	
+)
+select * from [seemap_A16028].[CustomerBranchMap]
+
+alter table [seemap_A16028].[CustomerBranchMap] 
+add constraint tblCustomerBranchMap_CustId_FK
+Foreign key (CustId) references [seemap_A16028].[CustomerInfo](CustId)
+
+alter table [seemap_A16028].[CustomerBranchMap] 
+add constraint tblCustomerBranchMap_BranchId_FK
+Foreign key (BranchId) references [seemap_A16028].[BranchInfo](BranchId)
+
+create table [seemap_A16028].[CustomerStatus]
+(
+	CustId int ,
+	SatusId int ,		
+	FromDate date,
+	ToDate date
+	
+)
+select * from [seemap_A16028].[CustomerStatus]
+drop table [seemap_A16028].[CustomerStatus]
+
+
+alter table [seemap_A16028].[CustomerStatus] 
+add constraint tblCustomerStatus_CustId_FK
+Foreign key (CustId) references [seemap_A16028].[CustomerInfo](CustId)
+
+create table [seemap_A16028].[TransactionInfo]
+(
+	CustId int ,
+	TransactionId int identity(1,1) primary key,		
+	TransactionDate date,
+	TransactionType varchar(100) Not Null, CHECK (TransactionType in ('Debit','Credit')),
+	Amount money,
+	TransactionDescription text	
+)
+select * from [seemap_A16028].[TransactionInfo]
+
+alter table [seemap_A16028].[TransactionInfo] 
+add constraint tblTransactionInfo_CustId_FK
+Foreign key (CustId) references [seemap_A16028].[CustomerInfo](CustId)
+
+create table [seemap_A16028].[Holding]
+(
+	CustId int ,
+	HoldingDate date,
+	Amount money,
+)
+select * from [seemap_A16028].[Holding]
+
+alter table [seemap_A16028].[Holding] 
+add constraint tblHolding_CustId_FK
+Foreign key (CustId) references [seemap_A16028].[CustomerInfo](CustId)
+
+drop table [seemap_A16028].[Holding]
+drop table [seemap_A16028].[TransactionInfo] 
+
+/*
+CustomerInfo
+	CustId  CustName  DateOfBirth  Gender  Address
+	1		A			1-1-96		M		A
+	2		B			1-2-96		F		B
+	3		c			1-3-96		M		C
+	4		D			1-4-96		F		D
+	5		E			1-5-96		M		E
+	6		F			1-6-96		F		F
+	7		G			1-7-96		M		G
+	8		H			1-8-96		F		H
+
+*/
+insert into [seemap_A16028].[CustomerInfo](CustName,DateOfBirth,Gender,CustAddress)
+values ('A','1-1-96','M','A1')
+insert into [seemap_A16028].[CustomerInfo](CustName,DateOfBirth,Gender,CustAddress)
+values ('B','1-2-96','F','B1')
+insert into [seemap_A16028].[CustomerInfo](CustName,DateOfBirth,Gender,CustAddress)
+values ('C','1-3-96','M','C1')
+insert into [seemap_A16028].[CustomerInfo](CustName,DateOfBirth,Gender,CustAddress)
+values ('D','1-4-96','F','D1')
+insert into [seemap_A16028].[CustomerInfo](CustName,DateOfBirth,Gender,CustAddress)
+values ('E','1-5-96','M','E1')
+insert into [seemap_A16028].[CustomerInfo](CustName,DateOfBirth,Gender,CustAddress)
+values ('F','1-6-96','F','F1')
+insert into [seemap_A16028].[CustomerInfo](CustName,DateOfBirth,Gender,CustAddress)
+values ('G','1-7-96','M','G1')
+insert into [seemap_A16028].[CustomerInfo](CustName,DateOfBirth,Gender,CustAddress)
+values ('H','1-8-96','F','H1')
+/*
+BranchInfo
+	BranchId  BranchName  Address
+	1			Vashi		Vashi
+	2			Naigaon		Naigaon
+	3			Sanpada		Sanapada
+	4			Chembur		Chembur	
+*/
+insert into [seemap_A16028].[BranchInfo](BranchName,BranchAddress)
+values ('Vashi','Vashi')
+insert into [seemap_A16028].[BranchInfo](BranchName,BranchAddress)
+values ('Naigaon','Naigaon')
+insert into [seemap_A16028].[BranchInfo](BranchName,BranchAddress)
+values ('Sanpada','Sanpada')
+insert into [seemap_A16028].[BranchInfo](BranchName,BranchAddress)
+values ('Chembur','Chembur')
+
+/*
+CustomerBranchMap
+	CustId  BranchId  FromDate  ToDate
+	1		1			1-4-16		Null		//then this row's ToDate changes to 30-6-16 
+	2		1			1-2-16		Null
+	1		3			1-7-16		Null		//when this happens
+*/
+insert into [seemap_A16028].[CustomerBranchMap](CustId,BranchId,BranchName,BranchAddress)
+values (1,1,'1-4-16',Null)
+insert into [seemap_A16028].[CustomerBranchMap](CustId,BranchId,BranchName,BranchAddress)
+values (2,1,'1-2-16',Null)
+
+/*
+CustomerStatus
+	CustId  StatusId  FromDate  ToDate
+	1		active	  1-4-16	Null	//this rows todate changes to 30-4-16
+	2       active    1-2-16	Null
+	1		suspend	  1-5-16    Null	//when this happens		//it changes to 31-5-16	
+	1		active	  1-6-16	Null	//when this happens	
+*/
+insert into [seemap_A16028].[CustomerStatus](CustId,SatusId,FromDate,ToDate)
+values (1,1,'1-4-16',Null)
+insert into [seemap_A16028].[CustomerStatus](CustId,SatusId,FromDate,ToDate)
+values (2,1,'1-2-16',Null)
+/*
+TransactionInfo 
+	TransactionId  CustId  Date  Type(Debit(Withdrawal)/Credit(Deposit))  Amount  Description
+	1				1	  1-4-16	Credit								   1000		a			
+	//when 1 makes a deposite of 1000 then now his closing balance in holding table would be
+	1000 for the date of 1-4-16.So only one record of the closing balance for each month is stored.
+	2				1	  2-6-16	Credit									250		a
+	//when this transaction takes place for month of june in the holding table a 
+	new record for this month closing balance is stored
+*/
+
+
+/*
+Holding
+	CustId  Amount  Date
+	1		0		1-4-16 //for each month 
+							i am storing the closing balance only 
+							so initially for this month when the account is first created 
+							1's opening balance is 0.But no transaction has been done yet
+							now lets see transaction info
+//So new holding value for 1 for month of april
+Holding
+	CustId  Amount  Date
+	1		1000	1-4-16 
+	1		1250	2-6-16	//for month of june//the closing balance is now 1250
+
+*/
+
+insert into [seemap_A16028].[Holding](CustId,HoldingDate,Amount)
+values (1,'1-4-16',0)
+insert into [seemap_A16028].[Holding](CustId,HoldingDate,Amount)
+values (2,'1-2-16',0)
+-----------------------------------------------------------------------------
+/*Execute command: New_Transaction 1,'7-8-16','Debit',1000,'A is withdrawing 1000 rupees'; 
+*/
+alter procedure New_Transaction
+@CustId int ,
+@TransactionDate date,
+@TransactionType varchar(100),
+@Amount money,
+@TransactionDescription text
+as 
+begin
+Declare @holdingDate date
+Declare @HoldingUpdateAmount money
+
+Set @holdingDate =(select  max(HoldingDate) from [seemap_A16028].[Holding] where CustId = @CustId  ) 
+Set @HoldingUpdateAmount =(select Amount from [seemap_A16028].[Holding] where CustId = @CustId and HoldingDate=@holdingDate)
+  
+if( @TransactionType='Debit' and @HoldingUpdateAmount<@Amount and DATEPART(MM,@holdingDate) = DATEPART(MM,@TransactionDate) and datepart(DD,@TransactionDate)>=datepart(DD,@holdingDate) )
+			begin             
+			 print 'insufficient funds'
+			 return
+        End
+	if(@TransactionType='Debit' and @HoldingUpdateAmount<@Amount and DATEPART(MM,@holdingDate) < DATEPART(MM,@TransactionDate) and datepart(DD,@TransactionDate)>=datepart(DD,@holdingDate)  )
+			begin             
+			 print 'insufficient funds'
+			 return
+        End
+	
+	if(@TransactionDate<@holdingDate)
+	begin             
+
+			 print 'transaction not allowed'
+			 return
+    End
+		
+insert into [seemap_A16028].[TransactionInfo](CustId,TransactionDate ,TransactionType,Amount,TransactionDescription)
+values (@CustId,@TransactionDate,@TransactionType,@Amount,@TransactionDescription)
+  if(DATEPART(MM,@holdingDate) = DATEPART(MM,@TransactionDate) and datepart(DD,@TransactionDate)>=datepart(DD,@holdingDate) and @TransactionType='Credit' )
+        begin
+             
+			 SET @HoldingUpdateAmount = @HoldingUpdateAmount+ @Amount
+			 SET @holdingDate = @TransactionDate
+			 UPDATE [seemap_A16028].[Holding]
+			 SET HoldingDate = @holdingDate,Amount=@HoldingUpdateAmount
+			 WHERE CustId = @CustId and  HoldingDate=(select max(HoldingDate) from [seemap_A16028].[Holding] where CustId = @CustId ) ;
+
+        End
+	if(DATEPART(MM,@holdingDate) < DATEPART(MM,@TransactionDate) and datepart(DD,@TransactionDate)>=datepart(DD,@holdingDate)  and @TransactionType='Credit')
+			begin
+             
+			 SET @HoldingUpdateAmount = @HoldingUpdateAmount+ @Amount
+			 SET @holdingDate = @TransactionDate
+			 insert into [seemap_A16028].[Holding] (CustId,HoldingDate,Amount)
+			 values(@CustId,@holdingDate,@HoldingUpdateAmount)		 
+
+        End
+---		print 'update balance'
+	if ( @TransactionType='Debit' and @HoldingUpdateAmount>=@Amount and ((DATEPART(MM,@holdingDate) = DATEPART(MM,@TransactionDate)) and (datepart(DD,@TransactionDate)>=datepart(DD,@holdingDate) )))
+	  If @TransactionType = 'Debit'		
+			begin
+   --          print 'In update balance1'
+			 SET @HoldingUpdateAmount = @HoldingUpdateAmount- @Amount
+			 SET @holdingDate = @TransactionDate
+			 UPDATE [seemap_A16028].[Holding]
+			 SET HoldingDate = @holdingDate,Amount=@HoldingUpdateAmount
+			 where CustId = @CustId and  HoldingDate=(select max(HoldingDate) from [seemap_A16028].[Holding] where CustId = @CustId ) 			 
+			End
+		print 'update balance2'
+	if(@TransactionType='Debit' and @HoldingUpdateAmount>=@Amount and DATEPART(MM,@holdingDate) < DATEPART(MM,@TransactionDate) and datepart(DD,@TransactionDate)>=datepart(DD,@holdingDate) )
+			begin
+         --    print 'In update balance2'
+			 SET @HoldingUpdateAmount = @HoldingUpdateAmount- @Amount
+			 SET @holdingDate = @TransactionDate
+			 insert into [seemap_A16028].[Holding] (CustId,HoldingDate,Amount)
+			 values(@CustId,@holdingDate,@HoldingUpdateAmount)				 
+			 
+        End
+		
+end
+---------------------------------------------------------
+select * from [seemap_A16028].[TransactionInfo]
+select max(HoldingDate) from [seemap_A16028].[Holding] 
+select * from [seemap_A16028].[Holding] 
+select t.TransactionId,t.TransactionDate ,t.TransactionType,t.Amount,h.Amount,h.HoldingDate
+from [seemap_A16028].[TransactionInfo] t,[seemap_A16028].[Holding] h
+where t.CustId=h.CustId;
+
+
+
+---------------------------------------------------------
+drop procedure New_Transaction
+New_Transaction 1,'2-4-16','Debir',1000,'A is withdrawing 1000 rupees';
+
+---------------------end of procedure 1---------------------------------------------------------
+CREATE FUNCTION [seemap_A16028].[return_balance] (@CustId int, @any_date date)
+RETURNS money
+AS BEGIN
+    DECLARE @balance money
+	Declare @prev_month_closing_balance_amount
+	set @prev_month_closing_balance_amount=select Amount from [seemap_A16028].[Holding] where CustId=@CustId and month(any_date)-1=month(HoldingDate)
+    SET @Work = @Input
+
+    
+
+    RETURN @balance
+END
+
+select Amount 
+from [seemap_A16028].[Holding] 
+where CustId=1 and HoldingDate=select max(month(7-8-16)>month(HoldingDate))
+								 from [seemap_A16028].[Holding]
+								  where CustId=1
+    ----check order by clause------------
