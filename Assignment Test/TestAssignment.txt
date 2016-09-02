@@ -1,0 +1,41 @@
+Create the below scenario.
+Save each SQL statement that you will executed including the insert statements and test use cases.
+
+Employee Database
+Table : Employee
+                Name			Name of the employee
+                empCode			Code of the employee
+                DateOfBirth		birth date of the employee
+                MonthlyPay      Pay per month 
+
+Table: Attendance
+                empCode         Code of the employee
+                date            Attendance Date
+                Status          Present/Absent/Leave
+ 
+Table: ClockinRecords
+                empCode         Code of the employee
+                channelNo       Channel will tell which the card reader. 1 is for in, 2 is for out
+                date            Date of swipe
+                time            Time of swipe
+
+Table: ProjectAssignment
+                empCode         Code of the employee
+                ProjectCode     Name of the project assigned to
+                fromDate        Date of assignment
+                toDate          End date of assignment
+				
+insert sample data into the above tables
+
+Execute the following queries.
+1.       List all employees who have birthday as of the current date.
+2.       For a given month, Find all employees who were absent
+3.       Create a procedure to calculate his monthly salary. The salary shall be deducted for number of days he is absent.
+4.       For a given date, Find all employees who were absent (not swiped even a single time )
+5.       Create a procedure to get the total time in office for each employee
+6.       Find all employees who were less than 8 hours in office.
+7.       For a given date, Find all employees who are not assigned to any project
+8.       Create a procedure to get the total time spent by an employee on a project
+9.       Total man days spent on any project.
+10.      For a given employee, find the period (date range) on which he was on bench (not assigned to any project)
+output for this(employee code, from date ,to date)
